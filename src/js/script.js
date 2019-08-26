@@ -163,11 +163,12 @@
           const imageSelectors = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
 
           if (optionSelected) {
-            for (let imageSelector in imageSelectors) {
+            for (let imageSelector of imageSelectors) {
               imageSelector.classList.add('active');
+
             }
           } else {
-            for (let imageSelector in imageSelectors) {
+            for (let imageSelector of imageSelectors) {
               imageSelector.classList.remove('active');
             }
           }
