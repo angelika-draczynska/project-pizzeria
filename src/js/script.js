@@ -76,6 +76,11 @@
     cart: {
       defaultDeliveryFee: 20,
     },
+    db: {
+      url: '//localhost:3131',
+      product: 'product',
+      order: 'order',
+    },
     // CODE ADDED END
   };
 
@@ -367,8 +372,8 @@
       thisCart.subtotalPrice = 0;
 
       for (let product of thisCart.products) {
-        thisCart.subtotalPrice = product.price;
-        thisCart.totalNumber = product.amount;
+        thisCart.subtotalPrice += product.price;
+        thisCart.totalNumber += product.amount;
       }
 
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
@@ -401,7 +406,8 @@
       thisCartProduct.priceSingle = menuProduct.priceSingle;
       thisCartProduct.amount = menuProduct.amount;
 
-      thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params))
+
+      thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
@@ -459,16 +465,27 @@
         thisCartProduct.remove();
       });
 
-
     }
-
   }
 
   const app = {
     initData: function () {
       const thisApp = this;
 
-      thisApp.data = dataSource;
+      thisApp.data = {};
+
+      const url = settings.db.url + '/' + settings.db.product;
+
+      fetch(url)
+      .then(function(rawResponse) {
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse) {
+        console.log(parsedResponse);
+
+        thisApp.data.products = parsedResponse ;
+        thisApp.initMenu();
+      });
     },
 
     initMenu: function () {
@@ -476,7 +493,7 @@
       console.log('thisApp.data:', thisApp.data);
 
       for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
     },
     initCart: function () {
@@ -494,7 +511,6 @@
       console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
       thisApp.initCart();
     },
   };
