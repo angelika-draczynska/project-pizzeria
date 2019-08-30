@@ -331,6 +331,7 @@
       thisCart.dom.productList = element.querySelector(select.cart.productList);
       thisCart.dom.form = element.querySelector(select.cart.form);
       thisCart.dom.address = element.querySelector(select.cart.address);
+      console.log('thisCart.dom.address', thisCart.dom.address);
       thisCart.dom.phone = element.querySelector(select.cart.phone);
 
       thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
@@ -409,17 +410,17 @@
 
       const payload = {
         products: [],
-        address: thisCart.dom.address,
-        phone: thisCart.dom.phone,
         totalNumber: thisCart.totalNumber,
         deliveryFee: thisCart.deliveryFee,
         subtotalPrice: thisCart.subtotalPrice,
         totalPrice: thisCart.totalPrice,
+        address: thisCart.dom.address.value,
+        phone: thisCart.dom.phone.value,
       };
 
-      for (let product in thisCart.products) {
+      for (let product of thisCart.products) {
         product.getData();
-        payload.products.push();
+        payload.products.push(product.getData());
       }
 
       const options = {
