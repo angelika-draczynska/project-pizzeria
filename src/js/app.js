@@ -91,6 +91,7 @@ const app = {
     const bookingContainer = document.querySelector(select.containerOf.booking);
     thisApp.booking = new Booking(bookingContainer);
   },
+
   init: function () {
     const thisApp = this;
     console.log('*** App starting ***');
