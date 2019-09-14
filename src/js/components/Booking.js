@@ -93,7 +93,7 @@ class Booking {
     thisBooking.updateDOM();
   }
 
- makeBooked(date, hour, duration, tableIds) {
+  makeBooked(date, hour, duration, tableIds) {
     const thisBooking = this;
 
     if (typeof thisBooking.booked[date] == 'undefined') {
@@ -115,6 +115,7 @@ class Booking {
 
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+
 
     let allAvaliable = false;
 
@@ -140,9 +141,9 @@ class Booking {
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
+        table.classList.remove(classNames.booking.tableReserved);
       }
     }
-
   }
 
   render(bookingContainer) {
@@ -184,9 +185,10 @@ class Booking {
 
     for (let table of thisBooking.dom.tables) {
       table.addEventListener('click', function () {
-        // if(thisBooking.isBooked() === false) {
-        table.classList.toggle(classNames.booking.tableBooked);
-        // }
+        if (table.classList.contains(classNames.booking.tableBooked)) {
+          return false;
+        }
+        table.classList.toggle(classNames.booking.tableReserved);
       });
     }
   }
@@ -202,28 +204,6 @@ class Booking {
 
   }
 
-  isBooked() {
-    const thisBooking = this;
-
-    for (let table of thisBooking.dom.tables) {
-      let tableId = table.getAttribute(settings.booking.tableIdAttribute);
-      tableId = parseInt(tableId);
-
-      if (thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)) {
-        thisBooking.pickTable();
-      }
-    }
-  }
-  // getBookingData() {
-  //   const thisBooking = this;
-
-  //   const bookingDetails = {
-  //     id: thisBooking.id,
-  //     params: thisBooking.params,
-  //   };
-
-  //   return bookingDetails;
-  // }
   sendOrder() {
     const thisBooking = this;
 
@@ -247,13 +227,13 @@ class Booking {
     }
 
     for (let table of thisBooking.dom.tables) {
-      if (table.classList.contains(classNames.booking.tableBooked)) {
+      if (table.classList.contains(classNames.booking.tableReserved)) {
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
         if (!isNaN(tableId)) {
           tableId = parseInt(tableId);
         }
-
         payload.tables.push(tableId);
+        table.classList.remove(classNames.booking.tableReserved);
       }
     }
 
