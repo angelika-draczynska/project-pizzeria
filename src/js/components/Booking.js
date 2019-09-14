@@ -73,11 +73,11 @@ class Booking {
     thisBooking.booked = {};
 
     for (let item of bookings) {
-      thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+      thisBooking.makeBooked(item.date, item.hour, item.duration, item.tables.map(it => parseInt(it)));
     }
 
     for (let item of eventsCurrent) {
-      thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+      thisBooking.makeBooked(item.date, item.hour, item.duration, [item.table]); // ?
     }
 
     const minDate = thisBooking.datePicker.minDate;
@@ -86,14 +86,14 @@ class Booking {
     for (let item of eventsRepeat) {
       if (item.repeat == 'daily') {
         for (let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)) {
-          thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
+          thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, [item.table]);
         }
       }
     }
     thisBooking.updateDOM();
   }
 
-  makeBooked(date, hour, duration, table) {
+ makeBooked(date, hour, duration, tableIds) {
     const thisBooking = this;
 
     if (typeof thisBooking.booked[date] == 'undefined') {
@@ -103,12 +103,10 @@ class Booking {
     const startHour = utils.hourToNumber(hour);
 
     for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
-
       if (typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
-
-      thisBooking.booked[date][hourBlock].push(table);
+      thisBooking.booked[date][hourBlock] = thisBooking.booked[date][hourBlock].concat(tableIds);
     }
   }
 
@@ -216,7 +214,16 @@ class Booking {
       }
     }
   }
+  // getBookingData() {
+  //   const thisBooking = this;
 
+  //   const bookingDetails = {
+  //     id: thisBooking.id,
+  //     params: thisBooking.params,
+  //   };
+
+  //   return bookingDetails;
+  // }
   sendOrder() {
     const thisBooking = this;
 
@@ -242,6 +249,9 @@ class Booking {
     for (let table of thisBooking.dom.tables) {
       if (table.classList.contains(classNames.booking.tableBooked)) {
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+        if (!isNaN(tableId)) {
+          tableId = parseInt(tableId);
+        }
 
         payload.tables.push(tableId);
       }
