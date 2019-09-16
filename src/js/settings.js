@@ -27,13 +27,14 @@ export const select = {
   },
   widgets: {
     amount: {
+      hourInput: '[name="hours"]',
       input: 'input.amount',
       linkDecrease: 'a[href="#less"]',
       linkIncrease: 'a[href="#more"]',
     },
     datePicker: {
       wrapper: '.date-picker',
-      input: `input[name="date"]`,
+      input: 'input[name="date"]',
     },
     hourPicker: {
       wrapper: '.hour-picker',
@@ -101,7 +102,7 @@ export const settings = {
   },
   amountWidget: {
     defaultValue: 1,
-    defaultMin: 1,
+    defaultMin: 0.5,
     defaultMax: 9,
   },
   datePicker: {

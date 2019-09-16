@@ -1,0 +1,228 @@
+.home-wrapper {
+  margin: ($base-size * 3.5) auto;
+  padding: ($base-size * 6) ($base-size * 4);
+  background: $color-light;
+  border-bottom: 1px solid lighten($color-dark, 70%);
+  border-radius: $radius;
+}
+
+.main-nav {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 0 auto;
+
+  .order-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 300px;
+    height: 120px;
+    background: url(/images/assets/pizza-1.jpg) center center;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+    border-bottom-left-radius: $radius;
+    transition: $transition;
+  }
+  .order-image:hover > a {
+    transition: $transition;
+    transform: translateY(-15px);
+    opacity: 1;
+  }
+  .order-image:hover > span {
+    transition: $transition;
+    transform: translateY(-18px);
+    opacity: 1;
+  }
+  .booking-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 300px;
+    height: 120px;
+    background: url(/images/assets/pizza-2.jpg) center center;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+    border-bottom-left-radius: $radius;
+    transition: $transition;
+
+  }
+  .booking-image:hover > a {
+    transition: $transition;
+    transform: translateY(-15px);
+    opacity: 1;
+  }
+  .booking-image:hover > span {
+    transition: $transition;
+    transform: translateY(-18px);
+    opacity: 1;
+  }
+
+  a {
+    @extend .h1;
+    text-decoration: none;
+    color: $color-light;
+  }
+
+  span {
+    color: $color-light;
+    opacity: 0;
+
+  }
+  .opening-hours {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    width: 100%;
+    background: $color-main;
+    border-radius: $radius;
+    padding: 30px;
+
+    .opening-hours-text {
+      margin: 0;
+      @extend .h1;
+      color: $color-light;
+    }
+    .opening-hours-text2 {
+      margin: 0;
+      @extend .h2;
+      color: $color-light;
+    }
+  }
+  .review-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex: 0 1 100%;
+
+    margin-top: 100px;
+
+    .author-image {
+      object-fit: cover;
+      border-radius: $radius;
+      width: 193px;
+      height: 193px;
+    }
+
+    .review-title {
+      font-size: 14px;
+      font-family: $font-text;
+      font-weight: $font-bold;
+      text-transform: uppercase;
+    }
+
+    .content {
+      font-size: 14px;
+      font-family: $font-text;
+    }
+
+    .review-author {
+      font-size: 14px;
+      font-family: $font-text;
+      font-style: italic;
+    }
+
+    .carousel {
+      width: 60%;
+    }
+
+    .button-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .dot {
+        height: 10px;
+        width: 10px;
+        margin: 0 8px;
+        background-color: #cdcdcd;
+        border-radius: 50%;
+        display: inline-block;
+        transition: border-color 0.6s ease;
+        margin-top: 32px;
+
+        &.active {
+          background-color: #333333;
+        }
+      }
+    }
+  }
+
+  .image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-around;
+    justify-content: space-between;
+    margin-top: 81px;
+.single-image {
+  position: relative;
+    .overlay {
+      display: flex;
+      align-content: space-around;
+      position: absolute;
+      width: 193px;
+      height: 193px;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 2;
+      background-color: $color-dark;
+      border-radius: $radius;
+      opacity: 0;
+      transition: all 0.5s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .social-media {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        align-content: space-around;
+        justify-content: space-between;
+        text-align: center;
+
+        li {
+          display: inline-block;
+
+          i {
+            font-size: 30px;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            color: #fff;
+
+            &:hover {
+              color: $color-main;
+              transition: all 0.2s;
+            }
+          }
+        }
+      }
+    }
+    }
+
+    .image-in-gallery {
+      position: relative;
+      margin-bottom: 10px;
+      width: 193px;
+      height: 193px;
+      object-fit: cover;
+      border-radius: $radius;
+      z-index: 1;
+    }
+  }
+}

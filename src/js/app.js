@@ -14,8 +14,8 @@ const app = {
 
     let pageMatchingHash = thisApp.pages[0].id;
 
-    for(let page of thisApp.pages) {
-      if(page.id === idFromHash) {
+    for (let page of thisApp.pages) {
+      if (page.id === idFromHash) {
         pageMatchingHash = page.id;
         break;
       }
@@ -23,8 +23,8 @@ const app = {
 
     thisApp.activatePage(pageMatchingHash);
 
-    for(let link of thisApp.navLinks) {
-      link.addEventListener('click', function(event){
+    for (let link of thisApp.navLinks) {
+      link.addEventListener('click', function (event) {
         const clickedElement = this;
         event.preventDefault();
 
@@ -32,6 +32,13 @@ const app = {
         thisApp.activatePage(id);
 
         window.location.hash = '#/' + id;
+
+        // const editBookingUrl = new RegExp("/w{8}", "g");
+
+
+        // if(href.match(editBookingUrl)) {
+        //   window.location.hash = '#/' + id + editBookingUrl;
+        // }
       });
     }
   },
@@ -85,12 +92,13 @@ const app = {
       app.cart.add(event.detail.product);
     });
   },
-  initBooking: function() {
+  initBooking: function () {
     const thisApp = this;
 
     const bookingContainer = document.querySelector(select.containerOf.booking);
     thisApp.booking = new Booking(bookingContainer);
   },
+
 
   init: function () {
     const thisApp = this;
@@ -101,7 +109,6 @@ const app = {
     console.log('templates:', templates);
 
     thisApp.initPages();
-
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();

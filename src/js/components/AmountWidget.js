@@ -7,18 +7,16 @@ class AmountWidget extends BaseWidget {
     const thisWidget = this;
 
     thisWidget.getElements(element);
-    // thisWidget.value = settings.amountWidget.defaultValue;
-    // thisWidget.setValue(thisWidget.dom.input.value);
     thisWidget.initActions();
   }
 
-  getElements() {
+  getElements(element) {
     const thisWidget = this;
 
-
-    thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
-    thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
-    thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
+    thisWidget.element = element;
+    thisWidget.dom.input = thisWidget.element.querySelector(select.widgets.amount.input);
+    thisWidget.dom.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.dom.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
   }
 
   isValid(value) {
@@ -30,6 +28,7 @@ class AmountWidget extends BaseWidget {
   renderValue() {
     const thisWidget = this;
     thisWidget.dom.input.value = thisWidget.value;
+
   }
 
   initActions() {
@@ -41,13 +40,24 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.dom.linkDecrease.addEventListener('click', function (event) {
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value - 1);
-
+      if (thisWidget.dom.input.type === 'number') {
+        var n = Math.round(0.5 * 100) / 100;
+        thisWidget.setValue(thisWidget.value - n);
+        console.log(thisWidget.value);
+      } else {
+        thisWidget.setValue(thisWidget.value - 1);
+      }
     });
 
     thisWidget.dom.linkIncrease.addEventListener('click', function (event) {
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value + 1);
+      if (thisWidget.dom.input.type === 'number') {
+        var n = Math.round(0.5 * 100) / 100;
+        thisWidget.setValue(thisWidget.value + n);
+        console.log(thisWidget.value);
+      } else {
+        thisWidget.setValue(thisWidget.value + 1);
+      }
     });
   }
 }

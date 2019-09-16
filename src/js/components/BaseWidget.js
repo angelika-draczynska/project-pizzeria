@@ -23,7 +23,6 @@ class BaseWidget {
       thisWidget.correctValue = newValue;
       thisWidget.announce();
     }
-
     thisWidget.renderValue();
   }
 

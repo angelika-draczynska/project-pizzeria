@@ -12,8 +12,10 @@ class Booking {
     thisBooking.render(container);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.uuid();
     thisBooking.pickTable();
     thisBooking.initActions();
+
 
   }
 
@@ -65,6 +67,7 @@ class Booking {
       .then(function ([bookings, eventsCurrent, eventsRepeat]) {
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
+
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat) {
@@ -77,7 +80,7 @@ class Booking {
     }
 
     for (let item of eventsCurrent) {
-      thisBooking.makeBooked(item.date, item.hour, item.duration, [item.table]); // ?
+      thisBooking.makeBooked(item.date, item.hour, item.duration, [item.table]);
     }
 
     const minDate = thisBooking.datePicker.minDate;
@@ -86,6 +89,7 @@ class Booking {
     for (let item of eventsRepeat) {
       if (item.repeat == 'daily') {
         for (let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)) {
+
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, [item.table]);
         }
       }
@@ -144,6 +148,7 @@ class Booking {
         table.classList.remove(classNames.booking.tableReserved);
       }
     }
+
   }
 
   render(bookingContainer) {
@@ -199,15 +204,17 @@ class Booking {
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
     thisBooking.dom.form.addEventListener('submit', function (event) {
       event.preventDefault();
-      thisBooking.sendOrder();
+      thisBooking.sendBooking();
     });
 
   }
 
-  sendOrder() {
+  sendBooking() {
     const thisBooking = this;
 
     const url = settings.db.url + '/' + settings.db.booking;
+
+
 
     const payload = {
       tables: [],
@@ -218,7 +225,11 @@ class Booking {
       phone: thisBooking.dom.phone.value,
       address: thisBooking.dom.address.value,
       starters: [],
+      uuid: thisBooking.uuid(),
     };
+
+    // const editUrl = settings.db.url + '/' + settings.db.booking + '/' + payload.uuid;
+    // console.log(editUrl);
 
     for (let starter of thisBooking.dom.starters) {
       if (starter.checked === true) {
@@ -251,6 +262,35 @@ class Booking {
       }).then(function (parsedResponse) {
         console.log(parsedResponse);
       });
+
+    thisBooking.editLinkBooking = document.querySelector('.edit-link-booking');
+
+    const editUrl = window.location + '/' + payload.uuid;
+
+    thisBooking.editLinkBooking.setAttribute('href', editUrl);
+
+    thisBooking.editLinkBooking.innerHTML = 'Edit your booking';
+
+  }
+
+  editBooking() {
+    const thisBooking = this;
+
+    fetch('https://api.github.com/users/chriscoyier/repos');
+
+  }
+
+  uuid() {
+    var uuid = "", i, random;
+    for (i = 0; i < 32; i++) {
+      random = Math.random() * 16 | 0;
+
+      if (i == 8 || i == 12 || i == 16 || i == 20) {
+        uuid += "-";
+      }
+      uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+    }
+    return uuid;
   }
 
 }
