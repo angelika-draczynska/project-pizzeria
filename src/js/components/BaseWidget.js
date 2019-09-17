@@ -12,6 +12,7 @@ class BaseWidget {
     const thisWidget = this;
 
     return thisWidget.correctValue;
+
   }
 
   set value(value) {
@@ -33,6 +34,10 @@ class BaseWidget {
   }
 
   parseValue(value) {
+    const thisWidget = this;
+    if (thisWidget.dom.input.classList.contains('hours')) {
+      return parseFloat(value);
+    }
     return parseInt(value);
   }
 

@@ -12,10 +12,12 @@ class Booking {
     thisBooking.render(container);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.blabla();
     thisBooking.uuid();
     thisBooking.pickTable();
     thisBooking.initActions();
 
+console.log(thisBooking.blabla());
 
   }
 
@@ -148,7 +150,6 @@ class Booking {
         table.classList.remove(classNames.booking.tableReserved);
       }
     }
-
   }
 
   render(bookingContainer) {
@@ -190,10 +191,9 @@ class Booking {
 
     for (let table of thisBooking.dom.tables) {
       table.addEventListener('click', function () {
-        if (table.classList.contains(classNames.booking.tableBooked)) {
-          return false;
+        if (!(table.classList.contains(classNames.booking.tableBooked))) {
+          table.classList.toggle(classNames.booking.tableReserved);
         }
-        table.classList.toggle(classNames.booking.tableReserved);
       });
     }
   }
@@ -213,8 +213,6 @@ class Booking {
     const thisBooking = this;
 
     const url = settings.db.url + '/' + settings.db.booking;
-
-
 
     const payload = {
       tables: [],

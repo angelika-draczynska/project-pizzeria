@@ -8,6 +8,7 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.getElements(element);
     thisWidget.initActions();
+
   }
 
   getElements(element) {
@@ -15,11 +16,21 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.element = element;
     thisWidget.dom.input = thisWidget.element.querySelector(select.widgets.amount.input);
+    thisWidget.dom.inputHourPicker = document.querySelector('input[type="range"]');
     thisWidget.dom.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.dom.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+
+
   }
 
   isValid(value) {
+    const thisWidget = this;
+
+    if (thisWidget.dom.inputHourPicker.value == 23) {
+
+      return !isNaN(value) && value <= 1 && value >= 0.5;
+    }
+
     return !isNaN(value)
       && value >= settings.amountWidget.defaultMin
       && value <= settings.amountWidget.defaultMax;
@@ -40,10 +51,10 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.dom.linkDecrease.addEventListener('click', function (event) {
       event.preventDefault();
-      if (thisWidget.dom.input.type === 'number') {
-        var n = Math.round(0.5 * 100) / 100;
-        thisWidget.setValue(thisWidget.value - n);
-        console.log(thisWidget.value);
+      if (thisWidget.dom.input.classList.contains('hours')) {
+
+        thisWidget.setValue(thisWidget.value - 0.5);
+
       } else {
         thisWidget.setValue(thisWidget.value - 1);
       }
@@ -51,10 +62,10 @@ class AmountWidget extends BaseWidget {
 
     thisWidget.dom.linkIncrease.addEventListener('click', function (event) {
       event.preventDefault();
-      if (thisWidget.dom.input.type === 'number') {
-        var n = Math.round(0.5 * 100) / 100;
-        thisWidget.setValue(thisWidget.value + n);
-        console.log(thisWidget.value);
+      if (thisWidget.dom.input.classList.contains('hours')) {
+
+        thisWidget.setValue(thisWidget.value + 0.5);
+
       } else {
         thisWidget.setValue(thisWidget.value + 1);
       }

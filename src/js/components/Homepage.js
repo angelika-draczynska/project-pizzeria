@@ -1,4 +1,6 @@
+
 let slideIndex = 0;
+
 function homeCarousel() {
   const content = document.querySelectorAll('.content');
   const reviewTitle = document.querySelectorAll('.review-title');
@@ -51,4 +53,6 @@ function homeCarousel() {
 
   setTimeout(homeCarousel, 3000);
 
+
 }
+homeCarousel();
