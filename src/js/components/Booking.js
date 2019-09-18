@@ -12,12 +12,10 @@ class Booking {
     thisBooking.render(container);
     thisBooking.initWidgets();
     thisBooking.getData();
-    thisBooking.blabla();
     thisBooking.uuid();
     thisBooking.pickTable();
     thisBooking.initActions();
 
-console.log(thisBooking.blabla());
 
   }
 
