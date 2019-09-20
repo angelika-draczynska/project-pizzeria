@@ -138,9 +138,8 @@ class Booking {
       }
 
       if (
-        !allAvaliable
-        &&
-        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)
+        (!allAvaliable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId))
+        || this.isDateOverlaping(tableId)
       ) {
         table.classList.add(classNames.booking.tableBooked);
       } else {
@@ -148,6 +147,16 @@ class Booking {
         table.classList.remove(classNames.booking.tableReserved);
       }
     }
+  }
+
+  isDateOverlaping(tableId) {
+    const startHour = +this.hoursAmount.dom.inputHourPicker.value;
+    const amountOfHours = +this.hoursAmount.value;
+    const endHour = startHour + amountOfHours;
+
+    return Object.keys(this.booked[this.date])
+      .reduce((acc, hour) => utils.includes(+hour, startHour, endHour) ? acc.concat(this.booked[this.date][hour]) : acc, [])
+      .includes(tableId);
   }
 
   render(bookingContainer) {

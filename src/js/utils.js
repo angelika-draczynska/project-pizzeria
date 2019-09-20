@@ -71,6 +71,10 @@ utils.addDays = function(dateStr, days){
   return dateObj;
 };
 
+utils.includes = function(num, min, max) {
+  return num >= min && num <= max;
+}
+
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
